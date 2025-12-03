@@ -408,12 +408,12 @@ export default function LayoutStrategy() {
                     </motion.p>
                     <motion.h2
                         className="text-5xl md:text-7xl leading-tight"
-                        style={{ fontWeight: 700, fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}
+                        style={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ delay: 0.3 }}
                     >
-                        <span className="text-gradient-primary" style={{ fontWeight: 700, fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}>Studio Planner</span>
+                        <span className="text-gradient-primary" style={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}>Studio Planner</span>
                     </motion.h2>
                     <p className="text-white/60 mt-4 text-lg">
                         Click elements below to add them to the canvas. Drag to position. FOVs always point to center.

@@ -76,7 +76,7 @@ const InteractiveLetter = ({ char, index, mouseX, mouseY, containerRef, isGradie
             ref={letterRef}
             className="inline-block cursor-pointer relative"
             style={{
-                fontFamily: "'Proxima Nova', 'Montserrat', sans-serif",
+                fontFamily: "'Montserrat', sans-serif",
                 transform: `scale(${scale}) translateY(${yOffset}px)`,
                 marginRight: `${letterSpacing}px`,
                 transition: 'transform 0.15s ease-out, margin 0.15s ease-out',
@@ -238,7 +238,7 @@ export default function TitleSlide() {
                 <motion.div
                     ref={titleRef}
                     className="text-6xl md:text-8xl lg:text-[9rem] leading-[0.9] mb-8 tracking-tight"
-                    style={{ fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
                     initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.6, duration: 0.8 }}

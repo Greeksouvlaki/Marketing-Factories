@@ -93,7 +93,7 @@ const FlipCard = ({ member, index }) => {
                         >
                             {member.role}
                         </motion.p>
-                        <h3 className="text-2xl font-bold text-white" style={{ fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}>
+                        <h3 className="text-2xl font-bold text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
                             {member.name}
                         </h3>
                         <p className="text-white/50 text-sm mt-2">Hover to reveal</p>
@@ -203,12 +203,12 @@ export default function TeamSection() {
                     </motion.p>
                     <motion.h2
                         className="text-5xl md:text-7xl leading-tight"
-                        style={{ fontWeight: 700, fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}
+                        style={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ delay: 0.3 }}
                     >
-                        <span className="text-gradient-primary" style={{ fontWeight: 700, fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}>Meet the Team</span>
+                        <span className="text-gradient-primary" style={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}>Meet the Team</span>
                     </motion.h2>
                     <motion.p
                         className="text-lg text-white/60 mt-4 max-w-2xl mx-auto"

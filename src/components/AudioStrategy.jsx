@@ -185,12 +185,12 @@ export default function AudioStrategy() {
                     </motion.p>
                     <motion.h2
                         className="text-5xl md:text-7xl leading-tight"
-                        style={{ fontWeight: 700, fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}
+                        style={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ delay: 0.3 }}
                     >
-                        <span className="text-gradient-primary" style={{ fontWeight: 700, fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}>Audio Strategy</span>
+                        <span className="text-gradient-primary" style={{ fontWeight: 700, fontFamily: "'Montserrat', sans-serif" }}>Audio Strategy</span>
                     </motion.h2>
                 </motion.div>
 
