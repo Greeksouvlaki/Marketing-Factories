@@ -18,6 +18,7 @@ export default function NavBar() {
 
     const navItems = [
         { label: 'Home', to: 'title' },
+        { label: 'Team', to: 'team' },
         { label: 'Visual', to: 'visual' },
         { label: 'Audio', to: 'audio' },
         { label: 'Layout', to: 'layout' },

@@ -16,6 +16,17 @@ const getAngleToCenter = (x, y, width, height) => {
 
 // Background options for the canvas
 const BACKGROUNDS = {
+    blueprint: {
+        label: 'Blueprint',
+        style: {
+            backgroundImage: `url("${import.meta.env.BASE_URL}blueprint.png")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+        },
+        pattern: 'none',
+        patternSize: '0',
+    },
     studio: {
         label: 'Studio',
         style: {
@@ -348,7 +359,7 @@ export default function LayoutStrategy() {
     const isInView = useInView(ref, { once: false, amount: 0.2 })
     const [elements, setElements] = useState([])
     const [nextId, setNextId] = useState(1)
-    const [selectedBg, setSelectedBg] = useState('studio')
+    const [selectedBg, setSelectedBg] = useState('blueprint')
 
     const addElement = useCallback((type) => {
         const config = ELEMENT_TYPES[type]

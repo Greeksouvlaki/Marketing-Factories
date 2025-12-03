@@ -4,9 +4,9 @@ import { motion, useInView } from 'framer-motion'
 const Card = ({ title, subtitle, items, isRecommended, index, delay }) => {
     return (
         <motion.div
-            className={`relative p-8 rounded-2xl backdrop-blur-xl border transition-all duration-300 group ${
+            className={`relative p-8 pt-10 rounded-2xl backdrop-blur-xl border transition-all duration-300 group h-full ${
                 isRecommended
-                    ? 'bg-gradient-to-br from-[#2A1AFC]/20 to-[#6366f1]/10 border-[#2A1AFC]/50 shadow-2xl shadow-[#2A1AFC]/20 mt-6'
+                    ? 'bg-gradient-to-br from-[#2A1AFC]/20 to-[#6366f1]/10 border-[#2A1AFC]/50 shadow-2xl shadow-[#2A1AFC]/20'
                     : 'bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10'
             }`}
             style={{ overflow: 'visible' }}
@@ -208,7 +208,7 @@ export default function VideoStrategy() {
                     </motion.h2>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                     {options.map((option, index) => (
                         <Card
                             key={index}

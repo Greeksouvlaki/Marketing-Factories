@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, useScroll } from 'framer-motion'
 import NavBar from './components/NavBar'
 import TitleSlide from './components/TitleSlide'
+import TeamSection from './components/TeamSection'
 import VideoStrategy from './components/VideoStrategy'
 import AudioStrategy from './components/AudioStrategy'
 import LayoutStrategy from './components/LayoutStrategy'
@@ -46,6 +47,7 @@ function App() {
             {/* Main content */}
             <div className="relative z-10">
                 <TitleSlide />
+                <TeamSection />
                 <VideoStrategy />
                 <AudioStrategy />
                 <LayoutStrategy />

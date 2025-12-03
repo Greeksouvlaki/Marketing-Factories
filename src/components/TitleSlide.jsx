@@ -1,10 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useSpring, useTransform } from 'framer-motion'
 
 // Static waveform that reacts to mouse position
 const StaticWaveform = ({ mouseX, containerWidth }) => {
     const bars = 80
-    const barWidth = containerWidth / bars
     
     return (
         <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
@@ -40,19 +39,113 @@ const StaticWaveform = ({ mouseX, containerWidth }) => {
     )
 }
 
+// Interactive letter component that responds to mouse proximity with smooth morphing
+const InteractiveLetter = ({ char, index, mouseX, mouseY, containerRef, isGradient }) => {
+    const letterRef = useRef(null)
+    const [proximity, setProximity] = useState(0) // 0 to 1 based on distance
+    
+    useEffect(() => {
+        const checkProximity = () => {
+            if (!letterRef.current || !containerRef.current) return
+            
+            const letterRect = letterRef.current.getBoundingClientRect()
+            const letterCenterX = letterRect.left + letterRect.width / 2
+            const letterCenterY = letterRect.top + letterRect.height / 2
+            
+            const distance = Math.sqrt(
+                Math.pow(mouseX - letterCenterX, 2) + 
+                Math.pow(mouseY - letterCenterY, 2)
+            )
+            
+            // Smooth proximity calculation (0 = far, 1 = close)
+            const maxDistance = 150
+            const newProximity = Math.max(0, 1 - distance / maxDistance)
+            setProximity(newProximity)
+        }
+        
+        checkProximity()
+    }, [mouseX, mouseY, containerRef])
+    
+    // Calculate interpolated values based on proximity
+    const scale = 1 + proximity * 0.08
+    const yOffset = proximity * -8
+    const letterSpacing = proximity * 2
+    
+    return (
+        <span
+            ref={letterRef}
+            className="inline-block cursor-pointer relative"
+            style={{
+                fontFamily: "'Proxima Nova', 'Montserrat', sans-serif",
+                transform: `scale(${scale}) translateY(${yOffset}px)`,
+                marginRight: `${letterSpacing}px`,
+                transition: 'transform 0.15s ease-out, margin 0.15s ease-out',
+            }}
+        >
+            {/* Base layer - Bold (700) */}
+            <span
+                className={isGradient ? 'text-gradient-primary' : 'text-white'}
+                style={{
+                    fontWeight: 700,
+                    opacity: 1 - proximity,
+                    transition: 'opacity 0.2s ease-out',
+                }}
+            >
+                {char === ' ' ? '\u00A0' : char}
+            </span>
+            {/* Overlay layer - Black (900) */}
+            <span
+                className={`absolute inset-0 ${isGradient ? 'text-gradient-primary' : 'text-white'}`}
+                style={{
+                    fontWeight: 900,
+                    opacity: proximity,
+                    transition: 'opacity 0.2s ease-out',
+                }}
+            >
+                {char === ' ' ? '\u00A0' : char}
+            </span>
+        </span>
+    )
+}
+
+// Interactive title that tracks mouse position
+const InteractiveTitle = ({ text, isGradient, containerRef, mouseX, mouseY }) => {
+    return (
+        <div className="flex justify-center flex-wrap">
+            {text.split('').map((char, index) => (
+                <InteractiveLetter
+                    key={index}
+                    char={char}
+                    index={index}
+                    mouseX={mouseX}
+                    mouseY={mouseY}
+                    containerRef={containerRef}
+                    isGradient={isGradient}
+                />
+            ))}
+        </div>
+    )
+}
+
 export default function TitleSlide() {
     const ref = useRef(null)
+    const titleRef = useRef(null)
     const isInView = useInView(ref, { once: false, amount: 0.3 })
     const [mouseX, setMouseX] = useState(0)
+    const [absoluteMouseX, setAbsoluteMouseX] = useState(0)
+    const [absoluteMouseY, setAbsoluteMouseY] = useState(0)
     const [containerWidth, setContainerWidth] = useState(1200)
-    const [isHoveringTitle, setIsHoveringTitle] = useState(false)
     
     useEffect(() => {
         const handleMouseMove = (e) => {
+            // For waveform (relative to section)
             if (ref.current) {
                 const rect = ref.current.getBoundingClientRect()
                 setMouseX(e.clientX - rect.left)
             }
+            // For interactive title (absolute screen position)
+            setAbsoluteMouseX(e.clientX)
+            setAbsoluteMouseY(e.clientY)
         }
         
         const handleResize = () => {
@@ -142,42 +235,33 @@ export default function TitleSlide() {
                     Production Strategy
                 </motion.p>
 
-                <motion.h1
+                <motion.div
+                    ref={titleRef}
                     className="text-6xl md:text-8xl lg:text-[9rem] leading-[0.9] mb-8 tracking-tight"
                     style={{ fontFamily: "'Proxima Nova', 'Montserrat', sans-serif" }}
                     initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.6, duration: 0.8 }}
-                    onMouseEnter={() => setIsHoveringTitle(true)}
-                    onMouseLeave={() => setIsHoveringTitle(false)}
                 >
-                    <motion.span
-                        className="block mb-2 text-white cursor-pointer"
-                        style={{ 
-                            fontFamily: "'Proxima Nova', 'Montserrat', sans-serif",
-                            transition: 'font-weight 0.3s ease',
-                        }}
-                        animate={{
-                            fontWeight: isHoveringTitle ? 900 : 700,
-                        }}
-                        whileHover={{ scale: 1.02 }}
-                    >
-                        MARKETING
-                    </motion.span>
-                    <motion.span
-                        className="block text-gradient-primary cursor-pointer"
-                        style={{ 
-                            fontFamily: "'Proxima Nova', 'Montserrat', sans-serif",
-                            transition: 'font-weight 0.3s ease',
-                        }}
-                        animate={{
-                            fontWeight: isHoveringTitle ? 900 : 700,
-                        }}
-                        whileHover={{ scale: 1.02 }}
-                    >
-                        FACTORIES
-                    </motion.span>
-                </motion.h1>
+                    <div className="block mb-2">
+                        <InteractiveTitle
+                            text="MARKETING"
+                            isGradient={false}
+                            containerRef={titleRef}
+                            mouseX={absoluteMouseX}
+                            mouseY={absoluteMouseY}
+                        />
+                    </div>
+                    <div className="block">
+                        <InteractiveTitle
+                            text="FACTORIES"
+                            isGradient={true}
+                            containerRef={titleRef}
+                            mouseX={absoluteMouseX}
+                            mouseY={absoluteMouseY}
+                        />
+                    </div>
+                </motion.div>
 
                 <motion.p
                     className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-12 leading-relaxed"
