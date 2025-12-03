@@ -280,16 +280,18 @@ export default function TitleSlide() {
                     transition={{ delay: 1 }}
                 >
                     <motion.button
-                        className="px-10 py-4 bg-gradient-to-r from-[#2A1AFC] to-[#6366f1] text-white font-semibold rounded-lg shadow-lg shadow-[#2A1AFC]/50 hover:shadow-[#2A1AFC]/70 transition-all"
+                        className="px-10 py-4 bg-gradient-to-r from-[#2A1AFC] to-[#6366f1] text-white font-semibold rounded-lg shadow-lg shadow-[#2A1AFC]/50 hover:shadow-[#2A1AFC]/70 transition-all cursor-pointer"
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => document.getElementById('visual')?.scrollIntoView({ behavior: 'smooth' })}
                     >
                         View Strategy
                     </motion.button>
                     <motion.button
-                        className="px-10 py-4 border-2 border-white/30 text-white font-semibold rounded-lg hover:border-white/50 hover:bg-white/5 transition-all backdrop-blur-sm"
+                        className="px-10 py-4 border-2 border-white/30 text-white font-semibold rounded-lg hover:border-white/50 hover:bg-white/5 transition-all backdrop-blur-sm cursor-pointer"
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' })}
                     >
                         Learn More
                     </motion.button>
