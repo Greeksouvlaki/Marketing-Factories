@@ -293,7 +293,7 @@ export default function TitleSlide() {
                         whileTap={{ scale: 0.95 }}
                         onClick={() => document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' })}
                     >
-                        Learn More
+                        Meet the Team
                     </motion.button>
                 </motion.div>
             </motion.div>
